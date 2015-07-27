@@ -34,7 +34,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	static String server;
 	static int port;
 	ListView lv;
-	List<String> list = new ArrayList<>();
+	List<String> list = new ArrayList<String>();
 	String[] item = new String[6];
 	SharedPreferences spref;
 	ProgressBar progress;
@@ -64,7 +64,7 @@ public class MainActivity extends Activity implements OnClickListener {
 					progress.setVisibility(View.INVISIBLE);
 				if (msg.what == 3) {
 					if (list != null) {
-						ArrayAdapter<String> aad = new ArrayAdapter<>(
+						ArrayAdapter<String> aad = new ArrayAdapter<String>(
 								cont, android.R.layout.simple_list_item_1, list);
 						lv.setAdapter(aad);
 					} else {
@@ -80,7 +80,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				}
 				if (msg.what == 4)
 					showDialog(1);
-			}
+			};
 		};
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -124,6 +124,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
+      // TODO Auto-generated method stub
+      // добавляем пункты меню
       menu.add(0, 1, 0, "Full access");
       menu.add(0, 2, 0, "List AZS");
       menu.add(0, 3, 0, "Setings");

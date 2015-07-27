@@ -17,8 +17,8 @@ public class SokWorker {
 
 	public ArrayList<String> getPing() {
 		boolean tst = true;
-		String s;
-		ArrayList<String> list;
+		String s = null;
+		ArrayList<String> list = null;
 		try {
 			Socket socket = new Socket();
 			socket.connect(new InetSocketAddress(MainActivity.server,
@@ -28,7 +28,7 @@ public class SokWorker {
 			DataOutputStream out = new DataOutputStream(
 					socket.getOutputStream());
 			out.writeUTF("PING");
-			list = new ArrayList<>();
+			list = new ArrayList<String>();
 			while (tst) {
 				s = in.readUTF();
 				if (s.equals("END")) {
@@ -45,7 +45,7 @@ public class SokWorker {
 	}
 
 	public String RestartVPN(String azs) {
-		String tmp;
+		String tmp = null;
 		try {
 			Socket socket = new Socket();
 			socket.connect(new InetSocketAddress(MainActivity.server,
@@ -89,8 +89,8 @@ public class SokWorker {
 
 	public ArrayList<String> getInet() {
 		boolean tst = true;
-		String s;
-		ArrayList<String> list;
+		String s = null;
+		ArrayList<String> list = null;
 		try {
 			Socket socket = new Socket();
 			socket.connect(new InetSocketAddress(MainActivity.server,
@@ -100,7 +100,7 @@ public class SokWorker {
 			DataOutputStream out = new DataOutputStream(
 					socket.getOutputStream());
 			out.writeUTF("getInet");
-			list = new ArrayList<>();
+			list = new ArrayList<String>();
 			while (tst) {
 				s = in.readUTF();
 				if (s.equals("END")) {
@@ -117,7 +117,7 @@ public class SokWorker {
 	}
 
 	public String setInet(String adress, String durat) {
-		String tmp;
+		String tmp = null;
 		try {
 			Socket socket = new Socket();
 			socket.connect(new InetSocketAddress(MainActivity.server,
@@ -137,7 +137,7 @@ public class SokWorker {
 	}
 
 	public List<Azs> refreshTable(Context context) {
-		List<Azs> list = new LinkedList<>();
+		List<Azs> list = new LinkedList<Azs>();
 		boolean notEnd = true;
 		try {
 			Socket socket = new Socket();

@@ -22,7 +22,7 @@ public class InetActivity extends Activity implements OnClickListener {
 	Spinner spinnerForms;
 
 	ListView lv;
-	List<String> list = new ArrayList<>();
+	List<String> list = new ArrayList<String>();
 	Handler h;
 	ProgressBar progress;
 	Toast toast = null;
@@ -34,7 +34,7 @@ public class InetActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_inet);
 		findViewById(R.id.InetButt).setOnClickListener(this);
 		String[] objects = { "1", "3", "24" };
-		ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, objects);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -51,7 +51,7 @@ public class InetActivity extends Activity implements OnClickListener {
 					progress.setVisibility(View.INVISIBLE);
 				if (msg.what == 3) {
 					if (list != null) {
-						ArrayAdapter<String> aad = new ArrayAdapter<>(
+						ArrayAdapter<String> aad = new ArrayAdapter<String>(
 								cont, android.R.layout.simple_list_item_1, list);
 						lv.setAdapter(aad);
 					} else {
@@ -67,7 +67,7 @@ public class InetActivity extends Activity implements OnClickListener {
 				}
 				if (msg.what == 4)
 					showDialog(1);
-			}
+			};
 		};
 		h.sendEmptyMessage(2);
 	}

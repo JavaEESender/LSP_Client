@@ -33,7 +33,7 @@ public class Azs_activity extends Activity implements OnClickListener {
 	List<String> tmp;
 	Handler h;
 	Context cont;
-	List<Azs> lazs = new LinkedList<>();
+	List<Azs> lazs = new LinkedList<Azs>();
 	ProgressBar pb;
 	ListView lv;
 	String[] list;
@@ -49,7 +49,7 @@ public class Azs_activity extends Activity implements OnClickListener {
 		cont = this;
 		SQLiteDatabase db = sqS.getReadableDatabase();
 		Cursor cv = db.query("azsLetsPing", null, null, null, null, null, null);
-		tmp = new LinkedList<>();
+		tmp = new LinkedList<String>();
 		if (cv.moveToFirst()) {
 			int count = cv.getColumnIndex("adress");
 			do {
@@ -57,7 +57,7 @@ public class Azs_activity extends Activity implements OnClickListener {
 			} while (cv.moveToNext());
 		}
 		db.close();
-		ArrayAdapter<String> aad = new ArrayAdapter<>(this,
+		ArrayAdapter<String> aad = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, tmp);
 		lv = (ListView) findViewById(R.id.lvAZS);
 		pb = (ProgressBar) findViewById(R.id.progAzs);
@@ -69,7 +69,7 @@ public class Azs_activity extends Activity implements OnClickListener {
 					pb.setVisibility(View.VISIBLE);
 					break;
 				case 2:
-					ArrayAdapter<String> aas = new ArrayAdapter<>(cont,
+					ArrayAdapter<String> aas = new ArrayAdapter<String>(cont,
 							android.R.layout.simple_list_item_1, tmp);
 
 					lv.setAdapter(aas);
@@ -93,7 +93,7 @@ public class Azs_activity extends Activity implements OnClickListener {
 				default:
 					break;
 				}
-			}
+			};
 		};
 		EditText edFilter = (EditText) findViewById(R.id.edFilter);
 		MyTextWacher mtw = new MyTextWacher(lv, edFilter, this);
@@ -153,7 +153,7 @@ public class Azs_activity extends Activity implements OnClickListener {
 					h.sendEmptyMessage(1);
 					lazs = new SokWorker().refreshTable(cont);
 					if (lazs != null) {
-						tmp = new LinkedList<>();
+						tmp = new LinkedList<String>();
 						for (Azs t : lazs) {
 							tmp.add(t.getAdress());
 						}
