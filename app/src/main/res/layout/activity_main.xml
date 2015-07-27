@@ -1,0 +1,69 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/FrameLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <ListView
+        android:id="@+id/lv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <Button
+            android:id="@+id/confButt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/InetButt"
+            android:layout_marginTop="17dp"
+            android:background="@drawable/conf"
+            android:visibility="invisible" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:id="@+id/btActAzs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/InetButt"
+            android:layout_alignRight="@+id/InetButt"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/azs"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:id="@+id/inetButtM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btActAzs"
+            android:layout_alignRight="@+id/btActAzs"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/set"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:id="@+id/InetButt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/button" />
+
+    </RelativeLayout>
+
+</FrameLayout>

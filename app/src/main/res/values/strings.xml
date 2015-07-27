@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" translatable="false">LP</string>
+    <string name="hello_world" translatable="false">Hello world!</string>
+    <string name="appname" translatable="false">Let\'s ping</string>
+    <string name="subnet">subnet</string>
+    <string name="title_activity_conf" translatable="false">ConfActivity</string>
+    <string name="title_activity_inet" translatable="false">InetActivity</string>
+    <string name="title_activity_azs_activity" translatable="false">Azs_activity</string>
+    <string name="AZS">AZS</string>
+
+</resources>
