@@ -16,7 +16,7 @@ public class MyTextWacher implements TextWatcher {
 	public ListView lv;
 	Context context;
 	private String[] result;
-	private List<String> tmp = new LinkedList<String>();
+	private List<String> tmp = new LinkedList<>();
 	ArrayAdapter<String> aay;
 
 	public MyTextWacher(ListView lvi, EditText edt, Context cont) {
@@ -48,7 +48,7 @@ public class MyTextWacher implements TextWatcher {
 				tmp.add(cv.getString(tbl));
 			} while (cv.moveToNext());
 
-			aay = new ArrayAdapter<String>(context,
+			aay = new ArrayAdapter<>(context,
 					android.R.layout.simple_list_item_1, tmp);
 			lv.setAdapter(aay);
 		}
