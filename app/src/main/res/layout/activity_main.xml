@@ -3,10 +3,10 @@
     android:id="@+id/FrameLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}" >
+    tools:context=".MainActivity" >
 
     <ListView
-        android:id="@+id/lv1"
+        android:id="@+id/ListView_AZS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>
@@ -23,15 +23,6 @@
             android:layout_alignRight="@+id/InetButt"
             android:layout_marginTop="17dp"
             android:background="@drawable/conf"
-            android:visibility="invisible" />
-
-        <ProgressBar
-            android:id="@+id/progress"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:visibility="invisible" />
 
         <ImageButton

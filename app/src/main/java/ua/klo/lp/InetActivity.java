@@ -1,31 +1,35 @@
 package ua.klo.lp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import ua.klo.lp.R;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class InetActivity extends Activity implements OnClickListener {
 	Spinner spinnerForms;
-
-	ListView lv;
-	List<String> list = new ArrayList<String>();
+	ListView listView_Inet;
+	List<String> arrayList_Inet;
 	Handler h;
-	ProgressBar progress;
+	String ip;
+    String resp;
+    String add_inet;
+    String add_inter;
 	Toast toast = null;
+	ProgressDialog dialog;
 	Context cont = this;
 
 	@Override
@@ -34,76 +38,127 @@ public class InetActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_inet);
 		findViewById(R.id.InetButt).setOnClickListener(this);
 		String[] objects = { "1", "3", "24" };
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+		ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
 				android.R.layout.simple_spinner_item, objects);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		spinnerForms = (Spinner) findViewById(R.id.spinnerIP);
 		spinnerForms.setAdapter(adapter);
 
-		progress = (ProgressBar) findViewById(R.id.progressinet);
-		lv = (ListView) findViewById(R.id.lvInet);
-		h = new Handler() {
-			public void handleMessage(android.os.Message msg) {
-				if (msg.what == 1)
-					progress.setVisibility(View.VISIBLE);
-				if (msg.what == 2)
-					progress.setVisibility(View.INVISIBLE);
-				if (msg.what == 3) {
-					if (list != null) {
-						ArrayAdapter<String> aad = new ArrayAdapter<String>(
-								cont, android.R.layout.simple_list_item_1, list);
-						lv.setAdapter(aad);
-					} else {
-						lv.setAdapter(null);
-						if (toast != null) {
-							toast.cancel();
-						}
-						toast = Toast.makeText(getApplicationContext(),
-								"Connect FAIL!",
-								Toast.LENGTH_LONG);
-						toast.show();
+		listView_Inet = (ListView) findViewById(R.id.ListView_Inet);
+        h = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                if (msg.what == 1)
+                    dialog = new ProgressDialog(cont);
+                dialog.setMessage(getString(R.string.connect));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                dialog.show();
+                if (msg.what == 2)
+                    dialog.dismiss();
+                if (msg.what == 3) {
+                    if (arrayList_Inet != null) {
+                        ArrayAdapter<String> aad = new ArrayAdapter<>(
+                                cont, android.R.layout.simple_list_item_1, arrayList_Inet);
+                        listView_Inet.setAdapter(aad);
+                    } else {
+                        listView_Inet.setAdapter(null);
+                        if (toast != null) {
+                            toast.cancel();
+                        }
+                        toast = Toast.makeText(getApplicationContext(),
+                                getString(R.string.connect_fail),
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+                if (msg.what == 4) {
+                    showDialog(1);
+                }
+                if (msg.what == 5) {
+                    if (resp != null) {
+                        if (toast != null) {
+                            toast.cancel();
+                        }
+                        toast = Toast.makeText(getApplicationContext(),
+                                resp,
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                    } else {
+                        if (toast != null) {
+                            toast.cancel();
+                        }
+                        toast = Toast.makeText(getApplicationContext(),
+                                getString(R.string.connect_fail),
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
+            };
+        };
+
+        Thread tr = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                h.sendEmptyMessage(1);
+                arrayList_Inet = new SocketWorker().getInet();
+                h.sendEmptyMessage(3);
+                h.sendEmptyMessage(2);
+            }
+        });
+        tr.start();
+
+		listView_Inet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View itemClicked,
+									int position, long id) {
+				TextView textView = (TextView) itemClicked;
+				ip = textView.getText().toString();
+				Thread tr = new Thread(new Runnable() {
+					@Override
+					public void run() {
+                        h.sendEmptyMessage(1);
+						h.sendEmptyMessage(4);
+                        h.sendEmptyMessage(2);
 					}
-				}
-				if (msg.what == 4)
-					showDialog(1);
-			};
-		};
-		h.sendEmptyMessage(2);
+				});
+				tr.start();
+			}
+		});
+
 	}
 
 	@Override
 	public void onClick(View v) {
-		String tmp;
-		EditText subEd = (EditText) findViewById(R.id.subNetEdit);
-		EditText ipEd = (EditText) findViewById(R.id.IpEdit);
+		final EditText subEd = (EditText) findViewById(R.id.subNetEdit);
+		final EditText ipEd = (EditText) findViewById(R.id.IpEdit);
 		if ((subEd.getText().length() != 0) && (ipEd.getText().length() != 0)) {
-			String ip = "10.0." + subEd.getText().toString() + "."
+			add_inet = "10.0." + subEd.getText().toString() + "."
 					+ ipEd.getText().toString();
-			String tv = (String) spinnerForms.getSelectedItem();
-			tmp = new SokWorker().setInet(ip, tv);
-			if (tmp != null) {
-				if (toast != null) {
-					toast.cancel();
-				}
-				toast = Toast.makeText(getApplicationContext(), tmp,
-						Toast.LENGTH_LONG);
-				toast.show();
-				this.finish();
+			add_inter = (String) spinnerForms.getSelectedItem();
+            Thread btn = new Thread(new Runnable() {
+                @Override
+                public void run() {
+            h.sendEmptyMessage(1);
+            resp = new SocketWorker().setInet(add_inet, add_inter);
+            if (resp != null) {
+				h.sendEmptyMessage(5);
+                arrayList_Inet = new SocketWorker().getInet();
+
 			} else {
-				if (toast != null) {
-					toast.cancel();
-				}
-				toast = Toast.makeText(getApplicationContext(),
-						"Connect FAIL!", Toast.LENGTH_LONG);
-				toast.show();
+				h.sendEmptyMessage(5);
 			}
+                    h.sendEmptyMessage(3);
+                    h.sendEmptyMessage(2);
+                }
+            });
+            btn.start();
 		}else{
 			Thread tr = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					h.sendEmptyMessage(1);
-					list = new SokWorker().getInet();
+                    h.sendEmptyMessage(1);
+					arrayList_Inet = new SocketWorker().getInet();
 					h.sendEmptyMessage(3);
 					h.sendEmptyMessage(2);
 				}
@@ -111,4 +166,49 @@ public class InetActivity extends Activity implements OnClickListener {
 			tr.start();
 		}
 	}
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case 1 :
+                AlertDialog.Builder adb = new AlertDialog.Builder(this);
+                adb.setTitle(getString(R.string.full_access));
+                adb.setMessage(ip);
+                adb.setNegativeButton(getString(R.string.cancel), myEmptyClickListener);
+                adb.setPositiveButton(getString(R.string.delete), myCallListener);
+                adb.setCancelable(false);
+                return adb.create();
+            case 2 :
+                return null;
+        }
+        return null;
+    }
+    android.content.DialogInterface.OnClickListener myEmptyClickListener = new DialogInterface.OnClickListener() {
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            removeDialog(1);
+        }
+    };
+
+    android.content.DialogInterface.OnClickListener myCallListener = new DialogInterface.OnClickListener() {
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            Thread tr = new Thread(new Runnable() {
+                @Override
+                public void run() {
+            h.sendEmptyMessage(1);
+            resp = new SocketWorker().remInet(ip);
+            h.sendEmptyMessage(5);
+            removeDialog(1);
+                    arrayList_Inet = new SocketWorker().getInet();
+                    h.sendEmptyMessage(3);
+                    h.sendEmptyMessage(2);
+                }
+            });
+            tr.start();
+
+        }
+    };
 }
