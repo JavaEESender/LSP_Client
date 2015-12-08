@@ -15,4 +15,21 @@
     <string name="port">Порт</string>
     <string name="save">Сохранить</string>
     <string name="delete">Удалить</string>
+    <string name="hours">Часа</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="log_in">Войти</string>
+    <string name="exit">Выход</string>
+    <string name="hour">Час</string>
+    <string name="open">Открыть</string>
+    <string name="version">Версия:</string>
+    <string name="get_update">Обновить</string>
+    <string name="have_latest_version">У вас последняя версия</string>
+    <string name="new_version">Доступна новая версия</string>
+    <string name="downloading_update">Загрузка обновления...</string>
+    <string name="black_list">Черный список</string>
+    <string name="block">Заблокировать</string>
+    <string name="all_connected">Все на связи.</string>
+    <string name="ok">Да</string>
+    <string name="no_connection">Нет связи</string>
 </resources>

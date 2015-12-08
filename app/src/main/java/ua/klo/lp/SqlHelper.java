@@ -6,22 +6,21 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class SqlHelper extends SQLiteOpenHelper {
 
-	public SqlHelper(Context context) {
-		super(context, "LetsPing", null, 1);
-	}
+    public SqlHelper(Context context) {
+        super(context, "LetsPing", null, 1);
+    }
 
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		db.execSQL("create table azsLetsPing ("
-				+ "id integer primary key autoincrement," + "adress text,"
-				+ "prov text," + "telProv text," + "subnet text,"
-				+ "admin text," + "telAzs text" + ");");
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("create table azsLetsPing ("
+                + "id integer primary key autoincrement," + "adress text,"
+                + "prov text," + "telProv text," + "subnet text,"
+                + "admin text," + "telAzs text" + ");");
+    }
 
-	}
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-	}
+    }
 
 }

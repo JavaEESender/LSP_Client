@@ -2,40 +2,43 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ua.klo.lp"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.2.3">
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="14"
         android:targetSdkVersion="22" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.install_packages" />
+    <uses-permission android:name="android.permission.delete_packages" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/appname"
-        android:theme="@style/MyTheme">
+        android:theme="@style/ThemeD">
         <activity
             android:name="ua.klo.lp.MainActivity"
-            android:label="@string/appname"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="ua.klo.lp.InetActivity"
+            android:name="ua.klo.lp.AccessNetActivity"
             android:label="@string/full_access"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="ua.klo.lp.RejActivity"
+            android:label="@string/black_list"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="ua.klo.lp.Azs_activity"
             android:label="@string/list_azs"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -18,11 +18,17 @@
     </style>
 
     <style name="MyTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-    <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:alertDialogTheme">@android:style/Theme.DeviceDefault.Dialog</item>
     </style>
 
-    <style name="DialogTheme" parent="android:Theme.Holo.Dialog">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    <style name="ThemeD" parent="android:Theme.DeviceDefault">
+        <!--<item name="android:alertDialogTheme">@android:style/Theme.DeviceDefault.Dialog</item>-->
+        <!--<item name="android:editTextColor">#000000</item>-->
+    </style>
+
+    <style name="ThemeBlack" parent="android:Theme.Black">
+        <item name="android:windowActionBar">true</item>
+
     </style>
 
 </resources>

@@ -22,5 +22,25 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="dd" translatable="false"> : </string>
+    <string name="ip" translatable="false">IP:</string>
+    <string name="presub" translatable="false">10.0.</string>
+    <string name="d" translatable="false">.</string>
+    <string name="hours">Hours</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="exit">Exit</string>
+    <string name="hour">Hour</string>
+    <string name="open">Open</string>
+    <string name="version">Version:</string>
+    <string name="get_update">Update</string>
+    <string name="have_latest_version">You have the latest version</string>
+    <string name="new_version">New version is available</string>
+    <string name="downloading_update">Downloading update ...</string>
+    <string name="black_list">Black list</string>
+    <string name="block">Block</string>
+    <string name="all_connected">All Connected.</string>
+    <string name="ok">Ok</string>
+    <string name="no_connection">No connection</string>
 
 </resources>

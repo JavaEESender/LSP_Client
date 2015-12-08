@@ -10,7 +10,8 @@
         android:id="@+id/edFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" >
+        android:ems="10"
+        android:inputType="text">
 
         <requestFocus />
     </EditText>
@@ -37,7 +38,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginBottom="16dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/refresh"/>
+                android:background="@drawable/blue"
+                android:contentDescription="@string/abc_action_bar_home_description" />
 
         </RelativeLayout>
 

@@ -25,15 +25,15 @@ import android.widget.Toast;
 
 public class Azs_activity extends Activity implements OnClickListener {
 
-    SqlHelper sqS;
-    List<String> tmp;
-    Handler h;
     Context cont;
-    List<Azs> lazs = new LinkedList<>();
+    Handler h;
     ListView lv;
+    List<String> tmp;
+    List<Azs> linkedList_AZS = new LinkedList<>();
+    ProgressDialog dialog;
+    SqlHelper sqS;
     String[] list;
     Toast toast = null;
-    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,10 +138,10 @@ public class Azs_activity extends Activity implements OnClickListener {
                     @Override
                     public void run() {
                         h.sendEmptyMessage(1);
-                        lazs = new SocketWorker().refreshTable(cont);
-                        if (lazs != null) {
+                        linkedList_AZS = new SocketWorker().refreshTable(cont);
+                        if (linkedList_AZS != null) {
                             tmp = new LinkedList<>();
-                            for (Azs t : lazs) {
+                            for (Azs t : linkedList_AZS) {
                                 tmp.add(t.getAdress());
                             }
                             h.sendEmptyMessage(2);

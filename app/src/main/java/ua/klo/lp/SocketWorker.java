@@ -1,17 +1,22 @@
 package ua.klo.lp;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.os.Environment;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 public class SocketWorker {
 
@@ -44,27 +49,8 @@ public class SocketWorker {
         }
     }
 
-    public String RestartVPN(String azs) {
-        String tmp;
-        try {
-            Socket socket = new Socket();
-            socket.connect(new InetSocketAddress(MainActivity.server,
-                    MainActivity.port), 5000);
-            DataInputStream in = new DataInputStream(socket.getInputStream());
-            DataOutputStream out = new DataOutputStream(
-                    socket.getOutputStream());
-            out.writeUTF("VPN");
-            out.writeUTF(azs);
-            tmp = in.readUTF();
-            socket.close();
-            return tmp;
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
     public String[] getAzs(String azs) {
-        String[] item = new String[6];
+        String[] item = new String[7];
         item[0] = azs;
         try {
             Socket socket = new Socket();
@@ -80,6 +66,7 @@ public class SocketWorker {
             item[3] = in.readUTF();
             item[4] = in.readUTF();
             item[5] = in.readUTF();
+            item[6] = in.readUTF();
             socket.close();
             return item;
         } catch (IOException e) {
@@ -155,6 +142,76 @@ public class SocketWorker {
         }
     }
 
+
+    public ArrayList<String> getReject() {
+        boolean tst = true;
+        String s;
+        ArrayList<String> list;
+        try {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(MainActivity.server,
+                    MainActivity.port), 5000);
+
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(
+                    socket.getOutputStream());
+            out.writeUTF("getReject");
+            list = new ArrayList<>();
+            while (tst) {
+                s = in.readUTF();
+                if (s.equals("END")) {
+                    tst = false;
+                } else {
+                    list.add(s);
+                }
+            }
+            socket.close();
+            return list;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public String setReject(String adress, String durat) {
+        String tmp;
+        try {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(MainActivity.server,
+                    MainActivity.port), 5000);
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(
+                    socket.getOutputStream());
+            out.writeUTF("setReject");
+            out.writeUTF(adress);
+            out.writeUTF(durat);
+            tmp = in.readUTF();
+            socket.close();
+            return tmp;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public String remReject(String adress) {
+        String tmp;
+        try {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(MainActivity.server,
+                    MainActivity.port), 5000);
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(
+                    socket.getOutputStream());
+            out.writeUTF("remReject");
+            out.writeUTF(adress);
+            tmp = in.readUTF();
+            socket.close();
+            return tmp;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+
     public List<Azs> refreshTable(Context context) {
         List<Azs> list = new LinkedList<>();
         boolean notEnd = true;
@@ -222,5 +279,91 @@ public class SocketWorker {
             list[5] = cv.getString(telazs);
         }
         return list;
+    }
+
+    public String getLogin(String login, String pass) {
+        String salt;
+        try {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(MainActivity.server,
+                    MainActivity.port), 5000);
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(
+                    socket.getOutputStream());
+            out.writeUTF("getLogin");
+            out.writeUTF(login);
+            out.writeUTF(pass);
+            salt = in.readUTF();
+            socket.close();
+            return salt;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public String getExpireTime(String ip) {
+        String exptime;
+        try {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(MainActivity.server,
+                    MainActivity.port), 5000);
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(
+                    socket.getOutputStream());
+            out.writeUTF("getExpireTime");
+            out.writeUTF(ip);
+            exptime = in.readUTF();
+            socket.close();
+            return exptime;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public void updateApk(Context context) {
+        try {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(MainActivity.server,
+                    MainActivity.port), 5000);
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(
+                    socket.getOutputStream());
+            out.writeUTF("updateApk");
+            String PATH = Environment.getExternalStorageDirectory() + "/Download/";
+            File file = new File(PATH);
+            File outputFile = new File(file, "lp.apk");
+            if(outputFile.createNewFile()){
+                FileOutputStream fos = new FileOutputStream(outputFile);
+                byte[] buffer = new byte[1024];
+                int count;
+                while ((count = in.read(buffer, 0, buffer.length)) > 0) {
+                    fos.write(buffer, 0, count);
+                }
+                fos.close();
+            }
+            socket.close();
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(new File(PATH + "lp.apk")), "application/vnd.android.package-archive");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+
+        } catch (IOException e) {
+            System.out.print("Error");
+        }
+    }
+
+    public boolean checkUpdate(String version) {
+        try {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(MainActivity.server,
+                    MainActivity.port), 5000);
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(
+                    socket.getOutputStream());
+            out.writeUTF("checkUpdate");
+            return in.readUTF().equals(version);
+        } catch (IOException e) {
+            return false;
+        }
     }
 }

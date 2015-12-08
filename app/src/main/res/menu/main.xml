@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+            tools:context=".MainActivity">
+    <item android:id="@+id/action_full_access"
+          android:orderInCategory="100"
+          android:icon="@android:drawable/ic_menu_add"
+          android:title ="@string/full_access"
+          app:showAsAction="never" />
+    <item android:id="@+id/action_black_list"
+          android:orderInCategory="100"
+          android:title ="@string/black_list"
+          app:showAsAction="never" />
+    <item android:id="@+id/action_list_azs"
+          android:orderInCategory="100"
+          android:title ="@string/list_azs"
+          app:showAsAction="never" />
+    <item android:id="@+id/action_settings"
+          android:orderInCategory="100"
+          android:title ="@string/settings"
+          app:showAsAction="never" />
+    <item android:id="@+id/action_exit"
+        android:orderInCategory="100"
+        android:title ="@string/exit"
+        app:showAsAction="never" />
+</menu>
