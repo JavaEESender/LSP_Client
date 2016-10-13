@@ -128,18 +128,18 @@ public class MainActivity extends Activity implements OnClickListener {
             MainActivity.server = sharedPreferences.getString("SERVER_GW", "");
         } else {
             Editor ed = sharedPreferences.edit();
-            ed.putString("SERVER_GW", "gw.klo.ua");
+            ed.putString("SERVER_GW", "server.ua");
             ed.apply();
-            MainActivity.server = "gw.klo.ua";
+            MainActivity.server = "server.ua";
         }
         if (sharedPreferences.contains("PORT_GW")) {
             String savedText = sharedPreferences.getString("PORT_GW", "");
             MainActivity.port = Integer.parseInt(savedText);
         } else {
             Editor ed = sharedPreferences.edit();
-            ed.putString("PORT_GW", "7855");
+            ed.putString("PORT_GW", "78");
             ed.apply();
-            MainActivity.port = 7855;
+            MainActivity.port = 78;
         }
         if (sharedPreferences.contains("SALT_GW")) {
             MainActivity.salt = sharedPreferences.getString("SALT_GW", "");
